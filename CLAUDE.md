@@ -35,7 +35,7 @@ design/tokens.json    pricetag 디자인 시스템 원본 값
 
 ## 남은 일
 
-- 크롬 웹스토어 링크: `build.py`의 `STORE_URL`이 `#`이다. 주소를 받으면 채운다.
+- 크롬 웹스토어 링크는 `build.py`의 `STORE_URL`에 있다.
 - 도메인이 정해지면 `canonical`, `og:url`, `og:image`, 절대 경로 `hreflang`을 추가한다.
 - 배포: GitHub Pages(main 브랜치 루트). 처리방침은 호스팅을 GitHub Pages로 적고 있으니 호스팅을 바꾸면 `src/privacy/`도 고친다.
 - 개인정보 처리방침이나 수집 항목이 바뀌면 두 언어 본문과 시행일을 함께 고친다.

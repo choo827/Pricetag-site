@@ -5,7 +5,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 COPY = json.load(open(os.path.join(HERE, 'src', 'content.json'), encoding='utf-8'))
 OUT = HERE
-STORE_URL = '#'  # TODO: replace with the Chrome Web Store listing URL once published
+STORE_URL = 'https://chromewebstore.google.com/detail/jcchpbkchdipihciiidmgcjedffbhbfb'
 
 IMG = {
     '레트로 러닝화': 'shoe.webp', 'Retro running shoes': 'shoe.webp',
