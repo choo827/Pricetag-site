@@ -1,4 +1,4 @@
-"""Builds index.html (ko) and en/index.html from src/content.json. Run: python3 build.py"""
+"""Builds index.html, privacy.html (ko) and en/ from src/content.json and src/privacy/*.html. Run: python3 build.py"""
 import json, html, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -20,6 +20,9 @@ META = {
         'skip': '본문으로 건너뛰기',
         'dotsLabel': '상품 선택', 'emailLabel': '이메일 주소', 'brandHome': 'pricetag 홈',
         'popupsLabel': 'Pro 화면 미리보기',
+        'privacy': '개인정보 처리방침', 'home': '홈으로',
+        'privacyTitle': '개인정보 처리방침 — pricetag',
+        'privacyDesc': 'pricetag 크롬 확장 프로그램과 웹사이트가 어떤 정보를 어떻게 처리하는지 안내합니다.',
     },
     'en': {
         'title': 'pricetag — Drag a price. See it in your currency.',
@@ -27,10 +30,67 @@ META = {
         'skip': 'Skip to content',
         'dotsLabel': 'Choose a product', 'emailLabel': 'Email address', 'brandHome': 'pricetag home',
         'popupsLabel': 'Pro screens preview',
+        'privacy': 'Privacy Policy', 'home': 'Home',
+        'privacyTitle': 'Privacy Policy — pricetag',
+        'privacyDesc': 'How the pricetag Chrome extension and website handle your information.',
     },
 }
 ON, LAZY = ' class="is-on"', ' loading="lazy"'
 e = lambda s: html.escape(str(s), quote=True)
+
+
+def top(lang, m, c, a, ko_href, en_href, other_href, home_href, title, desc):
+    """<head> and site header shared by the landing and privacy pages."""
+    return f'''<!doctype html>
+<html lang="{lang}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{e(title)}</title>
+<meta name="description" content="{e(desc)}">
+<meta name="theme-color" content="#2E39A9">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{e(title)}">
+<meta property="og:description" content="{e(desc)}">
+<meta property="og:locale" content="{"ko_KR" if lang == "ko" else "en_US"}">
+<link rel="alternate" hreflang="ko" href="{ko_href}">
+<link rel="alternate" hreflang="en" href="{en_href}">
+<link rel="icon" href="{a}img/pricetag-mark.svg" type="image/svg+xml">
+<link rel="preload" href="{a}fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{a}site.css">
+<script>
+  (function () {{
+    try {{
+      var t = localStorage.getItem("pt-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      var l = localStorage.getItem("pt-lang");
+      if (l && l !== "{lang}") location.replace("{other_href}");
+    }} catch (e) {{}}
+  }})();
+</script>
+</head>
+<body>
+<a class="visually-hidden" href="#main">{e(m["skip"])}</a>
+
+<header class="header">
+  <a class="brand" href="{home_href}" aria-label="{e(m["brandHome"])}">
+    <img src="{a}img/pricetag-mark.svg" alt="" width="34" height="34">
+    <span>pricetag</span>
+  </a>
+  <div class="header-tools">
+    <nav class="lang" aria-label="Language">
+      <a href="{ko_href}" hreflang="ko" lang="ko" data-lang-link="ko" aria-current="{"true" if lang == "ko" else "false"}">한국어</a>
+      <a href="{en_href}" hreflang="en" lang="en" data-lang-link="en" aria-current="{"true" if lang == "en" else "false"}">English</a>
+    </nav>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="">
+      <svg class="moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <a class="btn btn-primary btn-small" href="{STORE_URL}">{e(c["ctaShort"])}</a>
+  </div>
+</header>
+
+'''
 
 
 def page(lang):
@@ -83,56 +143,7 @@ def page(lang):
           <p>{e(q["a"])}</p>
         </details>''' for i, q in enumerate(c['faqs']))
 
-    return f'''<!doctype html>
-<html lang="{lang}">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(m["title"])}</title>
-<meta name="description" content="{e(m["desc"])}">
-<meta name="theme-color" content="#2E39A9">
-<meta property="og:type" content="website">
-<meta property="og:title" content="{e(m["title"])}">
-<meta property="og:description" content="{e(m["desc"])}">
-<meta property="og:locale" content="{"ko_KR" if lang == "ko" else "en_US"}">
-<link rel="alternate" hreflang="ko" href="{ko_href}">
-<link rel="alternate" hreflang="en" href="{en_href}">
-<link rel="icon" href="{a}img/pricetag-mark.svg" type="image/svg+xml">
-<link rel="preload" href="{a}fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{a}site.css">
-<script>
-  (function () {{
-    try {{
-      var t = localStorage.getItem("pt-theme");
-      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
-      var l = localStorage.getItem("pt-lang");
-      if (l && l !== "{lang}") location.replace("{other_href}");
-    }} catch (e) {{}}
-  }})();
-</script>
-</head>
-<body>
-<a class="visually-hidden" href="#main">{e(m["skip"])}</a>
-
-<header class="header">
-  <a class="brand" href="{ko_href if lang == "ko" else en_href}" aria-label="{e(m["brandHome"])}">
-    <img src="{a}img/pricetag-mark.svg" alt="" width="34" height="34">
-    <span>pricetag</span>
-  </a>
-  <div class="header-tools">
-    <nav class="lang" aria-label="Language">
-      <a href="{ko_href}" hreflang="ko" lang="ko" data-lang-link="ko" aria-current="{"true" if lang == "ko" else "false"}">한국어</a>
-      <a href="{en_href}" hreflang="en" lang="en" data-lang-link="en" aria-current="{"true" if lang == "en" else "false"}">English</a>
-    </nav>
-    <button class="icon-btn" id="theme-toggle" type="button" aria-label="">
-      <svg class="moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-      <svg class="sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-    </button>
-    <a class="btn btn-primary btn-small" href="{STORE_URL}">{e(c["ctaShort"])}</a>
-  </div>
-</header>
-
-<main id="main">
+    return top(lang, m, c, a, ko_href, en_href, other_href, ko_href if lang == 'ko' else en_href, m['title'], m['desc']) + f'''<main id="main">
   <section class="hero">
     <div class="wrap row">
       <div class="stack" style="gap:24px">
@@ -250,13 +261,41 @@ def page(lang):
     <h2>{e(c["footTitle"])}</h2>
     <form class="signup" id="signup" action="https://gmail.us15.list-manage.com/subscribe/post?u=7a4b34e1ab518009c85cb469d&amp;id=03c1a33707&amp;f_id=00147be0f0" method="post" target="_blank" novalidate>
       <label class="visually-hidden" for="email">{e(m["emailLabel"])}</label>
-      <input id="email" type="email" name="EMAIL" autocomplete="email" placeholder="{e(c["email"])}" required>
+      <input id="email" type="email" name="EMAIL" aria-describedby="signup-consent" autocomplete="email" placeholder="{e(c["email"])}" required>
       <input type="hidden" name="LANG" value="{lang}">
       <div class="hp" aria-hidden="true"><input type="text" name="b_7a4b34e1ab518009c85cb469d_03c1a33707" tabindex="-1" value="" autocomplete="off"></div>
       <button type="submit">{e(c["notify"])}</button>
     </form>
+    <p class="consent" id="signup-consent">{e(c["consentA"])}<a href="privacy.html">{e(m["privacy"])}</a>{e(c["consentB"])}</p>
     <p class="status" id="signup-status" role="status" aria-live="polite"></p>
-    <small><span>© pricetag</span></small>
+    <small><span>© pricetag</span><a href="privacy.html">{e(m["privacy"])}</a></small>
+  </div>
+</footer>
+
+<script src="{a}site.js" defer></script>
+</body>
+</html>
+'''
+
+
+def privacy(lang):
+    c = COPY[lang]
+    m = META[lang]
+    a = ('' if lang == 'ko' else '../') + 'assets/'
+    ko_href = 'privacy.html' if lang == 'ko' else '../privacy.html'
+    en_href = 'en/privacy.html' if lang == 'ko' else 'privacy.html'
+    other_href = en_href if lang == 'ko' else ko_href
+    body = open(os.path.join(HERE, 'src', 'privacy', lang + '.html'), encoding='utf-8').read().rstrip()
+    body = '\n'.join(('    ' + ln) if ln else ln for ln in body.split('\n'))
+    return top(lang, m, c, a, ko_href, en_href, other_href, './', m['privacyTitle'], m['privacyDesc']) + f'''<main id="main" class="section legal-section">
+  <article class="legal">
+{body}
+  </article>
+</main>
+
+<footer class="footer footer-slim">
+  <div class="footer-in">
+    <small><span>© pricetag</span><a href="./">{e(m["home"])}</a><a href="privacy.html" aria-current="page">{e(m["privacy"])}</a></small>
   </div>
 </footer>
 
@@ -269,4 +308,6 @@ def page(lang):
 os.makedirs(os.path.join(OUT, 'en'), exist_ok=True)
 open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page('ko'))
 open(os.path.join(OUT, 'en', 'index.html'), 'w', encoding='utf-8').write(page('en'))
+open(os.path.join(OUT, 'privacy.html'), 'w', encoding='utf-8').write(privacy('ko'))
+open(os.path.join(OUT, 'en', 'privacy.html'), 'w', encoding='utf-8').write(privacy('en'))
 print('ok')

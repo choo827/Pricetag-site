@@ -196,6 +196,31 @@ button { cursor: pointer; }
 .status.is-err { color: #FFD7D2; }
 .footer small { font-size: 13px; color: #C9CDF5; padding-top: 32px; display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 .footer small a { text-decoration: underline; text-underline-offset: 3px; }
+.consent { margin: -8px 0 0; max-width: 420px; font-size: 13px; line-height: 1.6; color: #C9CDF5; }
+.consent a { color: #FFFFFF; text-decoration: underline; text-underline-offset: 3px; }
+.footer-slim { padding: 40px 64px; }
+.footer-slim small { padding-top: 0; }
+
+/* privacy policy */
+.legal-section { padding-top: 32px; }
+.legal { max-width: 760px; margin: 0 auto; font-size: 16px; line-height: 1.75; color: var(--body); }
+.legal h1 { margin: 0; font-weight: 700; font-size: 40px; line-height: 1.25; letter-spacing: -0.02em; color: var(--ink); }
+.legal .legal-meta { margin: 12px 0 32px; font-size: 15px; color: var(--muted); }
+.legal h2 { margin: 56px 0 16px; font-weight: 700; font-size: 22px; line-height: 1.4; color: var(--ink); }
+.legal h3 { margin: 28px 0 12px; font-weight: 500; font-size: 17px; color: var(--ink); }
+.legal p { margin: 0 0 16px; }
+.legal ul { margin: 0 0 16px; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.legal strong { font-weight: 500; color: var(--ink); }
+.legal a { color: var(--brand-text); text-decoration: underline; text-underline-offset: 3px; }
+.legal code { font-size: 14px; background: var(--chip); padding: 2px 6px; border-radius: 8px; }
+.table-wrap { margin: 0 0 16px; overflow-x: auto; background: var(--surface); border-radius: 16px; }
+.legal table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 15px; line-height: 1.6; }
+.legal th, .legal td { padding: 14px 18px; text-align: left; vertical-align: top; }
+.legal tbody tr + tr > *, .legal thead + tbody tr:first-child > * { border-top: 1px solid var(--line); }
+.legal thead th { font-weight: 500; font-size: 14px; color: var(--muted); }
+.legal tbody th { font-weight: 500; color: var(--ink); }
+.legal table:not(:has(thead)) { min-width: 0; }
+.legal table:not(:has(thead)) th { width: 32%; }
 
 /* responsive */
 @media (max-width: 860px) {
@@ -204,6 +229,8 @@ button { cursor: pointer; }
   .hero { padding: 24px 24px 72px; }
   .section { padding: 72px 24px; }
   .footer { padding: 64px 24px 40px; }
+  .footer-slim { padding: 32px 24px; }
+  .legal h1 { font-size: 32px; }
   .row { gap: 48px; }
   .h1 { font-size: 38px; }
   .h2 { font-size: 28px; }
