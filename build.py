@@ -271,7 +271,7 @@ def page(lang):
     </div>
   </section>
 
-  <section class="section band faq" aria-labelledby="faq-t" style="border-bottom:none">
+  <section class="section band faq" id="faq" aria-labelledby="faq-t" style="border-bottom:none">
     <div class="wrap stack" style="max-width:760px;gap:32px">
       <h2 class="h2" id="faq-t">{e(c["faqTitle"])}</h2>
       <div>
