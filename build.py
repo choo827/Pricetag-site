@@ -29,6 +29,7 @@ META = {
         'popupsLabel': 'Pro screens preview',
     },
 }
+ON, LAZY = ' class="is-on"', ' loading="lazy"'
 e = lambda s: html.escape(str(s), quote=True)
 
 
@@ -43,7 +44,7 @@ def page(lang):
     first = c['heroItems'][0]
 
     hero_imgs = '\n'.join(
-        f'            <img src="{a}img/{IMG[it["name"]]}" alt="{e(it["name"])}"{" class=\"is-on\"" if i == 0 else ""}{" loading=\"lazy\"" if i else ""} width="960" height="500">'
+        f'            <img src="{a}img/{IMG[it["name"]]}" alt="{e(it["name"])}"{ON if i == 0 else ""}{LAZY if i else ""} width="960" height="500">'
         for i, it in enumerate(c['heroItems']))
     dots = '\n'.join(
         f'        <button type="button" aria-label="{e((str(i+1) + c["slideLabel"]) if lang == "ko" else (c["slideLabel"] + str(i+1)))}" aria-current="{"true" if i == 0 else "false"}"><span></span></button>'
