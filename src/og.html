@@ -1,0 +1,46 @@
+<!doctype html>
+<!-- Source of assets/img/og-ko.png and og-en.png (link preview images, 1200x630).
+     Open src/og.html#ko or src/og.html#en in a browser at 1200x630 and screenshot the .og element. -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  html, body { margin: 0; background: var(--bg); }
+  .og { width: 1200px; height: 630px; box-sizing: border-box; padding: 72px 88px; display: flex; flex-direction: column; justify-content: space-between; background: #F6F6FA; color: #000000; }
+  .og .brand img { width: 56px; height: 56px; }
+  .og .brand span { font-size: 36px; }
+  .og-row { display: flex; align-items: center; justify-content: space-between; gap: 48px; }
+  .og h1 { margin: 0; font-weight: 700; font-size: 64px; line-height: 1.2; letter-spacing: -0.02em; }
+  .og-demo { flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 40px 48px 48px; background: #FFFFFF; border-radius: 16px; box-shadow: 0 4px 16px #00000029; }
+  .og-price { font-weight: 500; font-size: 40px; padding: 2px 8px; margin-left: -8px; border-radius: 4px; background: rgba(46, 57, 169, .12); }
+  .og-bubble { height: 64px; padding: 0 32px; display: inline-flex; align-items: center; border-radius: 0 32px 32px 32px; background: #2E39A9; color: #FFFFFF; box-shadow: 0 4px 16px #2E39A93D; font-weight: 300; font-size: 36px; }
+  .og-foot { font-size: 24px; color: #5F6488; }
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="brand"><img src="../assets/img/pricetag-mark.svg" alt=""><span>pricetag</span></div>
+  <div class="og-row">
+    <h1 id="h1"></h1>
+    <div class="og-demo">
+      <span class="og-price num" id="from"></span>
+      <span class="og-bubble num" id="to"></span>
+    </div>
+  </div>
+  <div class="og-foot" id="foot"></div>
+</div>
+<script>
+  var T = {
+    ko: { h1: "가격을 드래그하면,<br>내 통화로 바로 보여요", from: "$459.99", to: "₩ 680,790", foot: "크롬 확장 프로그램 · 161개 통화 · 무료" },
+    en: { h1: "Drag a price.<br>See it in your currency.", from: "¥16,500", to: "$ 106.45", foot: "Chrome extension · 161 currencies · Free" }
+  };
+  var lang = location.hash === "#en" ? "en" : "ko", t = T[lang];
+  document.documentElement.lang = lang;
+  document.getElementById("h1").innerHTML = t.h1;
+  document.getElementById("from").textContent = t.from;
+  document.getElementById("to").textContent = t.to;
+  document.getElementById("foot").textContent = t.foot;
+</script>
+</body>
+</html>

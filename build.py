@@ -5,6 +5,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 COPY = json.load(open(os.path.join(HERE, 'src', 'content.json'), encoding='utf-8'))
 OUT = HERE
+BASE_URL = 'https://choo827.github.io/Pricetag-site/'  # GitHub Pages paths are case-sensitive
 STORE_URL = 'https://chromewebstore.google.com/detail/jcchpbkchdipihciiidmgcjedffbhbfb'
 
 IMG = {
@@ -21,6 +22,7 @@ META = {
         'dotsLabel': '상품 선택', 'emailLabel': '이메일 주소', 'brandHome': 'pricetag 홈',
         'popupsLabel': 'Pro 화면 미리보기',
         'privacy': '개인정보 처리방침', 'home': '홈으로',
+        'ogAlt': '가격 $459.99 아래에 ₩ 680,790으로 바뀐 말풍선이 뜬 pricetag 소개 이미지',
         'privacyTitle': '개인정보 처리방침 — pricetag',
         'privacyDesc': 'pricetag 크롬 확장 프로그램과 웹사이트가 어떤 정보를 어떻게 처리하는지 안내합니다.',
     },
@@ -31,6 +33,7 @@ META = {
         'dotsLabel': 'Choose a product', 'emailLabel': 'Email address', 'brandHome': 'pricetag home',
         'popupsLabel': 'Pro screens preview',
         'privacy': 'Privacy Policy', 'home': 'Home',
+        'ogAlt': 'pricetag preview: the price ¥16,500 with a bubble below it showing $ 106.45',
         'privacyTitle': 'Privacy Policy — pricetag',
         'privacyDesc': 'How the pricetag Chrome extension and website handle your information.',
     },
@@ -41,7 +44,8 @@ ROBOTS = '<meta name="robots" content="noindex">\n'
 e = lambda s: html.escape(str(s), quote=True)
 
 
-def top(lang, m, c, a, ko_href, en_href, other_href, home_href, title, desc, noindex=False, guess_lang=False):
+def top(lang, m, c, a, ko_href, en_href, other_href, home_href, title, desc, noindex=False, guess_lang=False,
+        ko_path='', en_path='en/', extra_head=''):
     """<head> and site header shared by every page. guess_lang sends first-time visitors whose browser
     language is not Korean to the English page (used where Mailchimp links to a single URL)."""
     return f'''<!doctype html>
@@ -52,13 +56,23 @@ def top(lang, m, c, a, ko_href, en_href, other_href, home_href, title, desc, noi
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
 {ROBOTS if noindex else ""}<meta name="theme-color" content="#2E39A9">
+<link rel="canonical" href="{BASE_URL}{ko_path if lang == "ko" else en_path}">
+<link rel="alternate" hreflang="ko" href="{BASE_URL}{ko_path}">
+<link rel="alternate" hreflang="en" href="{BASE_URL}{en_path}">
+<link rel="alternate" hreflang="x-default" href="{BASE_URL}{ko_path}">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="pricetag">
+<meta property="og:url" content="{BASE_URL}{ko_path if lang == "ko" else en_path}">
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:locale" content="{"ko_KR" if lang == "ko" else "en_US"}">
-<link rel="alternate" hreflang="ko" href="{ko_href}">
-<link rel="alternate" hreflang="en" href="{en_href}">
-<link rel="icon" href="{a}img/pricetag-mark.svg" type="image/svg+xml">
+<meta property="og:locale:alternate" content="{"en_US" if lang == "ko" else "ko_KR"}">
+<meta property="og:image" content="{BASE_URL}assets/img/og-{lang}.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{e(m["ogAlt"])}">
+<meta name="twitter:card" content="summary_large_image">
+{extra_head}<link rel="icon" href="{a}img/pricetag-mark.svg" type="image/svg+xml">
 <link rel="preload" href="{a}fonts/Pretendard-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{a}site.css">
 <script>
@@ -146,7 +160,16 @@ def page(lang):
           <p>{e(q["a"])}</p>
         </details>''' for i, q in enumerate(c['faqs']))
 
-    return top(lang, m, c, a, ko_href, en_href, other_href, ko_href if lang == 'ko' else en_href, m['title'], m['desc']) + f'''<main id="main">
+    ld = json.dumps({
+        '@context': 'https://schema.org', '@type': 'SoftwareApplication', 'name': 'pricetag',
+        'applicationCategory': 'BrowserApplication', 'operatingSystem': 'Chrome',
+        'description': m['desc'], 'url': BASE_URL + ('' if lang == 'ko' else 'en/'), 'inLanguage': lang,
+        'downloadUrl': STORE_URL, 'image': BASE_URL + 'assets/img/og-' + lang + '.png',
+        'offers': {'@type': 'Offer', 'price': '0', 'priceCurrency': 'USD'},
+    }, ensure_ascii=False)
+    head = f'<script type="application/ld+json">{ld}</script>\n'
+    return top(lang, m, c, a, ko_href, en_href, other_href, ko_href if lang == 'ko' else en_href, m['title'], m['desc'],
+               extra_head=head) + f'''<main id="main">
   <section class="hero">
     <div class="wrap row">
       <div class="stack" style="gap:24px">
@@ -290,7 +313,8 @@ def privacy(lang):
     other_href = en_href if lang == 'ko' else ko_href
     body = open(os.path.join(HERE, 'src', 'privacy', lang + '.html'), encoding='utf-8').read().rstrip()
     body = '\n'.join(('    ' + ln) if ln else ln for ln in body.split('\n'))
-    return top(lang, m, c, a, ko_href, en_href, other_href, './', m['privacyTitle'], m['privacyDesc']) + f'''<main id="main" class="section legal-section">
+    return top(lang, m, c, a, ko_href, en_href, other_href, './', m['privacyTitle'], m['privacyDesc'],
+               ko_path='privacy.html', en_path='en/privacy.html') + f'''<main id="main" class="section legal-section">
   <article class="legal">
 {body}
   </article>
@@ -323,7 +347,7 @@ def subscribed(lang):
     en_href = 'en/subscribed.html' if lang == 'ko' else 'subscribed.html'
     other_href = en_href if lang == 'ko' else ko_href
     return top(lang, m, c, a, ko_href, en_href, other_href, './', c['doneTitle'] + ' — pricetag', c['doneText'],
-               noindex=True, guess_lang=(lang == 'ko')) + f'''<main id="main" class="section done">
+               noindex=True, guess_lang=(lang == 'ko'), ko_path='subscribed.html', en_path='en/subscribed.html') + f'''<main id="main" class="section done">
   <div class="done-in">
     <img src="{a}img/pricetag-mark.svg" alt="" width="64" height="64">
     <h1 class="h2">{e(c["doneTitle"])}</h1>
@@ -346,4 +370,19 @@ open(os.path.join(OUT, 'privacy.html'), 'w', encoding='utf-8').write(privacy('ko
 open(os.path.join(OUT, 'en', 'privacy.html'), 'w', encoding='utf-8').write(privacy('en'))
 open(os.path.join(OUT, 'subscribed.html'), 'w', encoding='utf-8').write(subscribed('ko'))
 open(os.path.join(OUT, 'en', 'subscribed.html'), 'w', encoding='utf-8').write(subscribed('en'))
+
+def sitemap():
+    pages = [('', 'en/'), ('privacy.html', 'en/privacy.html')]
+    urls = []
+    for ko, en in pages:
+        for loc in (ko, en):
+            alts = ''.join(f'\n    <xhtml:link rel="alternate" hreflang="{h}" href="{BASE_URL}{p}"/>'
+                           for h, p in (('ko', ko), ('en', en), ('x-default', ko)))
+            urls.append(f'  <url>\n    <loc>{BASE_URL}{loc}</loc>{alts}\n  </url>')
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
+            + '\n'.join(urls) + '\n</urlset>\n')
+
+
+open(os.path.join(OUT, 'sitemap.xml'), 'w', encoding='utf-8').write(sitemap())
 print('ok')

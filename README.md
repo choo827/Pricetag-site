@@ -25,6 +25,12 @@ assets/img/         로고, 상품 이미지
 - **Netlify Drop**: app.netlify.com/drop 에 이 폴더를 끌어다 놓으면 바로 주소가 생겨요. 가장 쉬워요.
 - **GitHub Pages**: 새 저장소에 이 폴더 내용을 올리고 Settings → Pages에서 main 브랜치를 선택해요. 확장 프로그램 저장소는 비공개이니 사이트용 저장소를 따로 만드세요.
 
+## 검색·공유
+
+- 모든 페이지에 canonical, 언어별 hreflang, 링크 미리보기(og:image `assets/img/og-ko.png`·`og-en.png`)가 들어 있어요. 랜딩 페이지에는 확장 프로그램 정보(JSON-LD)도 있어요.
+- `sitemap.xml`을 Google Search Console에 제출하세요. 주소를 바꾸면 `build.py`의 `BASE_URL`을 고치고 다시 빌드해요.
+- 미리보기 이미지의 문구를 바꾸면 `src/og.html`을 브라우저에서 1200×630으로 열어 다시 캡처해요.
+
 ## 문구를 고칠 때
 
 `src/content.json`(랜딩 페이지)이나 `src/privacy/ko.html`·`en.html`(처리방침 본문)에서 한국어·영문 문구를 고친 뒤 `python3 build.py`를 실행하면 네 페이지가 다시 만들어져요. HTML 파일을 직접 고치면 다음 빌드 때 덮어써지니 주의하세요.

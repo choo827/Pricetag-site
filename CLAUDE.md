@@ -14,6 +14,8 @@ privacy.html          개인정보 처리방침 한국어 (생성 결과물)
 en/privacy.html       개인정보 처리방침 영문 (생성 결과물)
 subscribed.html       Mailchimp 확인 링크를 누른 뒤 보이는 등록 완료 페이지 (생성 결과물, en/도 있음, 검색 제외)
 .nojekyll             GitHub Pages가 Jekyll 처리를 건너뛰게 한다
+sitemap.xml           검색엔진용 사이트맵 (생성 결과물)
+src/og.html           링크 미리보기 이미지 원본. #ko/#en을 1200×630으로 캡처해 assets/img/og-ko.png, og-en.png로 저장한다
 assets/site.css       스타일 (디자인 토큰을 CSS 변수로 사용)
 assets/site.js        다크 모드, 언어 기억, 상품 데모 회전, Mailchimp 가입
 assets/fonts/         Pretendard 300·400·500·700 + OFL 라이선스
@@ -37,6 +39,6 @@ design/tokens.json    pricetag 디자인 시스템 원본 값
 ## 남은 일
 
 - 크롬 웹스토어 링크는 `build.py`의 `STORE_URL`에 있다.
-- 도메인이 정해지면 `canonical`, `og:url`, `og:image`, 절대 경로 `hreflang`을 추가한다.
+- 도메인이 정해지면 `build.py`의 `BASE_URL`만 바꾸고 다시 빌드한다. canonical, hreflang, og:url, og:image, JSON-LD, `sitemap.xml`이 모두 이 값을 쓴다.
 - 배포: GitHub Pages(main 브랜치 루트). 처리방침은 호스팅을 GitHub Pages로 적고 있으니 호스팅을 바꾸면 `src/privacy/`도 고친다.
 - 개인정보 처리방침이나 수집 항목이 바뀌면 두 언어 본문과 시행일을 함께 고친다.
