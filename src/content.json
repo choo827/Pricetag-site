@@ -5,7 +5,7 @@
     "ctaNote": "가입 없이 바로 사용할 수 있어요",
     "h1a": "가격을 드래그하면,",
     "h1b": "내 통화로 바로 보여요",
-    "sub": "해외 쇼핑몰에서 가격을 선택하기만 하면, 바로 아래에 내 통화로 환산된 금액이 말풍선으로 떠요. 166개 통화, 새 탭도 계산기도 필요 없어요.",
+    "sub": "해외 쇼핑몰에서 가격을 선택하기만 하면, 바로 아래에 내 통화로 환산된 금액이 말풍선으로 떠요. 161개 통화, 새 탭도 계산기도 필요 없어요.",
     "heroItems": [
       {
         "name": "레트로 러닝화",
@@ -106,7 +106,7 @@
     "freeName": "무료",
     "freePrice": "₩0",
     "freeItems": [
-      "166개 통화 드래그 변환",
+      "161개 통화 드래그 변환",
       "팝업 계산기와 즐겨찾는 통화 5개",
       "사용 횟수 제한 없음, 가입 필요 없음"
     ],
@@ -116,7 +116,7 @@
     "features": [
       {
         "title": "나라마다 다른 표기도 정확하게",
-        "text": "천 단위와 소수점 구분이 나라마다 달라도 숫자 전체를 확인한 뒤 변환해요. 166개 통화의 기호와 코드를 알아봐요.",
+        "text": "천 단위와 소수점 구분이 나라마다 달라도 숫자 전체를 확인한 뒤 변환해요. 161개 통화의 기호와 코드를 알아봐요.",
         "chips": [
           "1.099,00 €",
           "119,800円",
@@ -193,7 +193,7 @@
     "ctaNote": "No sign-up needed",
     "h1a": "Drag a price.",
     "h1b": "See it in your currency.",
-    "sub": "Select a price on any shopping site and the converted amount pops up right below it in a speech bubble. 166 currencies, no new tabs, no calculator.",
+    "sub": "Select a price on any shopping site and the converted amount pops up right below it in a speech bubble. 161 currencies, no new tabs, no calculator.",
     "heroItems": [
       {
         "name": "Retro running shoes",
@@ -294,7 +294,7 @@
     "freeName": "Free",
     "freePrice": "$0",
     "freeItems": [
-      "Drag-to-convert in 166 currencies",
+      "Drag-to-convert in 161 currencies",
       "Popup calculator with 5 favorite currencies",
       "Unlimited use, no sign-up"
     ],
@@ -304,7 +304,7 @@
     "features": [
       {
         "title": "Reads local formats",
-        "text": "Thousands and decimal separators differ by country. PriceTag checks the whole number before converting, across 166 currencies.",
+        "text": "Thousands and decimal separators differ by country. PriceTag checks the whole number before converting, across 161 currencies.",
         "chips": [
           "1.099,00 €",
           "119,800円",

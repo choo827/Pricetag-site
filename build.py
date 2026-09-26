@@ -16,14 +16,14 @@ IMG = {
 META = {
     'ko': {
         'title': 'pricetag — 가격을 드래그하면 내 통화로',
-        'desc': '해외 쇼핑몰에서 가격을 선택하면 바로 아래에 내 통화로 환산된 금액이 말풍선으로 뜨는 크롬 확장 프로그램. 166개 통화 지원, 무료.',
+        'desc': '해외 쇼핑몰에서 가격을 선택하면 바로 아래에 내 통화로 환산된 금액이 말풍선으로 뜨는 크롬 확장 프로그램. 161개 통화 지원, 무료.',
         'skip': '본문으로 건너뛰기',
         'dotsLabel': '상품 선택', 'emailLabel': '이메일 주소', 'brandHome': 'pricetag 홈',
         'popupsLabel': 'Pro 화면 미리보기',
     },
     'en': {
         'title': 'pricetag — Drag a price. See it in your currency.',
-        'desc': 'A Chrome extension that converts any price you select into your currency, right below it in a speech bubble. 166 currencies. Free.',
+        'desc': 'A Chrome extension that converts any price you select into your currency, right below it in a speech bubble. 161 currencies. Free.',
         'skip': 'Skip to content',
         'dotsLabel': 'Choose a product', 'emailLabel': 'Email address', 'brandHome': 'pricetag home',
         'popupsLabel': 'Pro screens preview',
