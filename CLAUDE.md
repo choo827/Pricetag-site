@@ -15,6 +15,7 @@ en/privacy.html       개인정보 처리방침 영문 (생성 결과물)
 subscribed.html       Mailchimp 확인 링크를 누른 뒤 보이는 등록 완료 페이지 (생성 결과물, en/도 있음, 검색 제외)
 .nojekyll             GitHub Pages가 Jekyll 처리를 건너뛰게 한다
 sitemap.xml           검색엔진용 사이트맵 (생성 결과물)
+googled72989049e09b1d4.html  Google Search Console 소유권 확인 파일. 지우지 않는다
 src/og.html           링크 미리보기 이미지 원본. #ko/#en을 1200×630으로 캡처해 assets/img/og-ko.png, og-en.png로 저장한다
 assets/site.css       스타일 (디자인 토큰을 CSS 변수로 사용)
 assets/site.js        다크 모드, 언어 기억, 상품 데모 회전, Mailchimp 가입
