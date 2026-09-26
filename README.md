@@ -5,6 +5,8 @@
 ```
 index.html          한국어 페이지 (/)
 en/index.html       영문 페이지 (/en/)
+privacy.html        개인정보 처리방침 한국어 (/privacy.html)
+en/privacy.html     개인정보 처리방침 영문 (/en/privacy.html)
 assets/site.css     디자인 (pricetag 디자인 시스템 기준)
 assets/site.js      다크 모드, 상품 데모, Mailchimp 가입
 assets/fonts/       Pretendard (OFL 라이선스 포함)
@@ -15,7 +17,7 @@ assets/img/         로고, 상품 이미지
 
 1. **상품 이미지**: Unsplash 무료 사진(운동화 Mojtaba Fahiminia, 헤드폰 Cosmin Ursea, 영양제 Supliful, 세럼 Muhammad Sulyman)을 같은 비율로 자른 것이에요. Unsplash 라이선스는 사진 사용만 허락하고 사진 속 상표까지 허락하지는 않아요. 헤드폰에 작은 제조사 로고가 있으니 신경 쓰이면 같은 파일 이름으로 덮어쓰세요.
 2. **크롬 웹스토어 링크**: 두 HTML 파일에서 `href="#"`인 "크롬에 추가하기" 버튼 3개(영문도 3개)를 웹스토어 주소로 바꿔요.
-3. **개인정보 처리방침 페이지**: 이메일을 모으므로 필요해요. 페이지를 만들면 푸터의 `© pricetag` 옆에 링크를 추가하세요.
+3. **개인정보 처리방침**: `privacy.html`, `en/privacy.html`로 만들어 두었고 두 언어 푸터와 가입 폼 아래 동의 안내에 링크돼 있어요. 크롬 웹스토어 개발자 대시보드의 "개인정보 보호 관행"에 `privacy.html` 주소를 넣으세요. 확장 프로그램이나 수집 항목이 바뀌면 `src/privacy/`도 함께 고쳐요.
 
 ## 올리는 방법 (둘 중 하나)
 
@@ -24,7 +26,7 @@ assets/img/         로고, 상품 이미지
 
 ## 문구를 고칠 때
 
-`src/content.json`에서 한국어·영문 문구를 고친 뒤 `python3 build.py`를 실행하면 두 페이지가 다시 만들어져요. HTML 파일을 직접 고치면 다음 빌드 때 덮어써지니 주의하세요.
+`src/content.json`(랜딩 페이지)이나 `src/privacy/ko.html`·`en.html`(처리방침 본문)에서 한국어·영문 문구를 고친 뒤 `python3 build.py`를 실행하면 네 페이지가 다시 만들어져요. HTML 파일을 직접 고치면 다음 빌드 때 덮어써지니 주의하세요.
 
 ## Mailchimp 가입 연결
 
