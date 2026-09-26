@@ -36,11 +36,14 @@ META = {
     },
 }
 ON, LAZY = ' class="is-on"', ' loading="lazy"'
+GUESS = '      if (!l && !/^ko/i.test(navigator.language || "")) location.replace("{}");\n'
+ROBOTS = '<meta name="robots" content="noindex">\n'
 e = lambda s: html.escape(str(s), quote=True)
 
 
-def top(lang, m, c, a, ko_href, en_href, other_href, home_href, title, desc):
-    """<head> and site header shared by the landing and privacy pages."""
+def top(lang, m, c, a, ko_href, en_href, other_href, home_href, title, desc, noindex=False, guess_lang=False):
+    """<head> and site header shared by every page. guess_lang sends first-time visitors whose browser
+    language is not Korean to the English page (used where Mailchimp links to a single URL)."""
     return f'''<!doctype html>
 <html lang="{lang}">
 <head>
@@ -48,7 +51,7 @@ def top(lang, m, c, a, ko_href, en_href, other_href, home_href, title, desc):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
-<meta name="theme-color" content="#2E39A9">
+{ROBOTS if noindex else ""}<meta name="theme-color" content="#2E39A9">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
@@ -65,7 +68,7 @@ def top(lang, m, c, a, ko_href, en_href, other_href, home_href, title, desc):
       if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
       var l = localStorage.getItem("pt-lang");
       if (l && l !== "{lang}") location.replace("{other_href}");
-    }} catch (e) {{}}
+{GUESS.format(other_href) if guess_lang else ""}    }} catch (e) {{}}
   }})();
 </script>
 </head>
@@ -293,9 +296,15 @@ def privacy(lang):
   </article>
 </main>
 
-<footer class="footer footer-slim">
+''' + bottom(m, a, privacy_current=True)
+
+
+def bottom(m, a, privacy_current=False):
+    """Slim footer and closing tags for the privacy and subscribed pages."""
+    cur = ' aria-current="page"' if privacy_current else ''
+    return f'''<footer class="footer footer-slim">
   <div class="footer-in">
-    <small><span>© pricetag</span><a href="./">{e(m["home"])}</a><a href="privacy.html" aria-current="page">{e(m["privacy"])}</a></small>
+    <small><span>© pricetag</span><a href="./">{e(m["home"])}</a><a href="privacy.html"{cur}>{e(m["privacy"])}</a></small>
   </div>
 </footer>
 
@@ -305,9 +314,36 @@ def privacy(lang):
 '''
 
 
+def subscribed(lang):
+    """Page Mailchimp shows after someone clicks the link in the opt-in confirmation email."""
+    c = COPY[lang]
+    m = META[lang]
+    a = ('' if lang == 'ko' else '../') + 'assets/'
+    ko_href = 'subscribed.html' if lang == 'ko' else '../subscribed.html'
+    en_href = 'en/subscribed.html' if lang == 'ko' else 'subscribed.html'
+    other_href = en_href if lang == 'ko' else ko_href
+    return top(lang, m, c, a, ko_href, en_href, other_href, './', c['doneTitle'] + ' — pricetag', c['doneText'],
+               noindex=True, guess_lang=(lang == 'ko')) + f'''<main id="main" class="section done">
+  <div class="done-in">
+    <img src="{a}img/pricetag-mark.svg" alt="" width="64" height="64">
+    <h1 class="h2">{e(c["doneTitle"])}</h1>
+    <p class="lead">{e(c["doneText"])}</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="{STORE_URL}">{e(c["ctaShort"])}</a>
+      <a class="btn btn-outline" href="./">{e(c["doneHome"])}</a>
+    </div>
+    <p class="note">{e(c["doneTip"])}</p>
+  </div>
+</main>
+
+''' + bottom(m, a)
+
+
 os.makedirs(os.path.join(OUT, 'en'), exist_ok=True)
 open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page('ko'))
 open(os.path.join(OUT, 'en', 'index.html'), 'w', encoding='utf-8').write(page('en'))
 open(os.path.join(OUT, 'privacy.html'), 'w', encoding='utf-8').write(privacy('ko'))
 open(os.path.join(OUT, 'en', 'privacy.html'), 'w', encoding='utf-8').write(privacy('en'))
+open(os.path.join(OUT, 'subscribed.html'), 'w', encoding='utf-8').write(subscribed('ko'))
+open(os.path.join(OUT, 'en', 'subscribed.html'), 'w', encoding='utf-8').write(subscribed('en'))
 print('ok')

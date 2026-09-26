@@ -12,6 +12,7 @@ index.html            한국어 페이지 (생성 결과물)
 en/index.html         영문 페이지 (생성 결과물)
 privacy.html          개인정보 처리방침 한국어 (생성 결과물)
 en/privacy.html       개인정보 처리방침 영문 (생성 결과물)
+subscribed.html       Mailchimp 확인 링크를 누른 뒤 보이는 등록 완료 페이지 (생성 결과물, en/도 있음, 검색 제외)
 .nojekyll             GitHub Pages가 Jekyll 처리를 건너뛰게 한다
 assets/site.css       스타일 (디자인 토큰을 CSS 변수로 사용)
 assets/site.js        다크 모드, 언어 기억, 상품 데모 회전, Mailchimp 가입
@@ -31,7 +32,7 @@ design/tokens.json    pricetag 디자인 시스템 원본 값
 
 ## Mailchimp
 
-`assets/site.js`의 `MAILCHIMP_URL`과 `build.py` 템플릿의 `<form action>`에 같은 가입 주소가 들어 있다. 제출은 JSONP(`/post-json?...&c=콜백`)로 페이지 안에서 처리하고, 자바스크립트가 없으면 Mailchimp로 일반 전송된다. 함께 보내는 값은 `EMAIL`, 숨김 필드 `LANG`(ko/en), 스팸 방지 칸 `b_7a4b34e1ab518009c85cb469d_03c1a33707`(비워 둬야 함)이다. Mailchimp 쪽에는 LANG 필드(숨김)와 이중 확인이 설정돼 있다. 이 값들의 이름을 바꾸지 않는다.
+`assets/site.js`의 `MAILCHIMP_URL`과 `build.py` 템플릿의 `<form action>`에 같은 가입 주소가 들어 있다. 제출은 JSONP(`/post-json?...&c=콜백`)로 페이지 안에서 처리하고, 자바스크립트가 없으면 Mailchimp로 일반 전송된다. 함께 보내는 값은 `EMAIL`, 숨김 필드 `LANG`(ko/en), 스팸 방지 칸 `b_7a4b34e1ab518009c85cb469d_03c1a33707`(비워 둬야 함)이다. Mailchimp 쪽에는 LANG 필드(숨김)와 이중 확인이 설정돼 있다. 이 값들의 이름을 바꾸지 않는다. 확인 링크를 누르면 Mailchimp가 `subscribed.html`로 보낸다(Mailchimp의 Confirmation thank you page 설정). 이 페이지는 저장된 언어 선택이 없고 브라우저 언어가 한국어가 아니면 영문 페이지로 넘어간다.
 
 ## 남은 일
 

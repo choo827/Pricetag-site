@@ -187,7 +187,11 @@
     "email": "이메일 주소",
     "notify": "알림 받기",
     "consentA": "알림 받기를 누르면 Pro 출시 소식 안내를 위해 이메일 주소를 수집·이용하고, 발송 서비스(Mailchimp, 미국)로 이전하는 데 동의하게 됩니다. 자세한 내용은 ",
-    "consentB": "을 확인해 주세요."
+    "consentB": "을 확인해 주세요.",
+    "doneTitle": "등록이 끝났어요",
+    "doneText": "Pro가 출시되면 이 이메일로 가장 먼저 알려 드릴게요. 그동안 무료 기능을 마음껏 써 보세요.",
+    "doneHome": "pricetag 홈으로",
+    "doneTip": "소식 메일이 스팸함으로 가지 않게, 받은 확인 메일의 보낸 사람을 연락처에 추가해 두시면 좋아요."
   },
   "en": {
     "ctaShort": "Add to Chrome",
@@ -377,6 +381,10 @@
     "email": "Email address",
     "notify": "Notify me",
     "consentA": "By tapping Notify me, you agree that we collect your email to tell you about the Pro launch and store it with our email provider (Mailchimp, US). See our ",
-    "consentB": "."
+    "consentB": ".",
+    "doneTitle": "You’re on the list",
+    "doneText": "We’ll email you first when Pro launches. In the meantime, enjoy everything in the free version.",
+    "doneHome": "Back to pricetag",
+    "doneTip": "To keep our emails out of spam, add the sender of the confirmation email to your contacts."
   }
 }

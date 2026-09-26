@@ -7,6 +7,7 @@ index.html          한국어 페이지 (/)
 en/index.html       영문 페이지 (/en/)
 privacy.html        개인정보 처리방침 한국어 (/privacy.html)
 en/privacy.html     개인정보 처리방침 영문 (/en/privacy.html)
+subscribed.html     메일 확인 후 등록 완료 페이지 (Mailchimp에서 이 주소로 보냄)
 assets/site.css     디자인 (pricetag 디자인 시스템 기준)
 assets/site.js      다크 모드, 상품 데모, Mailchimp 가입
 assets/fonts/       Pretendard (OFL 라이선스 포함)
