@@ -285,7 +285,7 @@ def page(lang):
   <div class="footer-in">
     <img src="{a}img/pricetag-mark-inverse.svg" alt="" width="56" height="56">
     <h2>{e(c["footTitle"])}</h2>
-    <form class="signup" id="signup" action="https://gmail.us15.list-manage.com/subscribe/post?u=7a4b34e1ab518009c85cb469d&amp;id=03c1a33707&amp;f_id=00147be0f0" method="post" target="_blank" novalidate>
+    <form class="signup" id="signup" action="https://gmail.us15.list-manage.com/subscribe/post?u=7a4b34e1ab518009c85cb469d&amp;id=03c1a33707" method="post" target="_blank" novalidate>
       <label class="visually-hidden" for="email">{e(m["emailLabel"])}</label>
       <input id="email" type="email" name="EMAIL" aria-describedby="signup-consent" autocomplete="email" placeholder="{e(c["email"])}" required>
       <input type="hidden" name="LANG" value="{lang}">
